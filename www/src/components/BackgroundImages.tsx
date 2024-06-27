@@ -1,25 +1,24 @@
 import {Project} from '../sanity.types'
 import {
+  BackgroundImage,
+  BackgroundImageDiv,
+  BackgroundImageOverlay,
   DefaultImage,
-  ProjectDiv,
-  ProjectImage,
-  ProjectImageOverlay,
 } from '../styles'
 import {urlFor} from '../utils/urlFor'
 
-export default function ProjectContainer({project}: {project: Project}) {
+export default function BackgroundImages({project}: {project: Project}) {
   return (
-    <ProjectDiv>
-      // <div>{project.title}</div>
-      <ProjectImage>
-        <ProjectImageOverlay />
+    <BackgroundImageDiv>
+      <BackgroundImage>
+        <BackgroundImageOverlay />
         <DefaultImage
           src={urlFor(project?.image as any)
             .width(2000)
             .auto('format')
             .url()}
         />
-      </ProjectImage>
-    </ProjectDiv>
+      </BackgroundImage>
+    </BackgroundImageDiv>
   )
 }
