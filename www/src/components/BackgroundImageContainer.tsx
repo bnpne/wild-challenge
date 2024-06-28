@@ -1,4 +1,4 @@
-import {useState, useRef, type MutableRefObject, useEffect} from 'react'
+import {useRef, type MutableRefObject} from 'react'
 import {Project} from '../sanity.types'
 import {BackgroundImageWrapper} from '../styles'
 import gsap from 'gsap'
@@ -13,30 +13,27 @@ import BackgroundImages from './BackgroundImages'
  */
 export default function BackgroundImageContainer({
   projects,
-  scroll,
 }: {
   projects: Array<Project>
-  scroll: number
 }) {
-  // state
-  const [currentScroll, setCurrentScroll] = useState<number>(0)
-
   // refs
   const background: MutableRefObject<HTMLDivElement | undefined> = useRef()
-
-  // update scroll
-  useEffect(() => {
-    if (scroll) setCurrentScroll(scroll)
-  }, [scroll])
 
   // handle background images scroll
   useGSAP(
     () => {
-      gsap.set(background.current as HTMLDivElement, {
-        x: -currentScroll,
+      gsap.to(background.current as HTMLDivElement, {
+        xPercent: `-${(projects.length - 1) * 100}`,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: document.documentElement,
+          scrub: true,
+          start: 'top top',
+          end: 'bottom bottom',
+        },
       })
     },
-    {scope: background, dependencies: [currentScroll]},
+    {scope: background, dependencies: [background.current]},
   )
 
   return (

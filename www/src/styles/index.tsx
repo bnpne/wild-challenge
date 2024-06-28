@@ -88,7 +88,7 @@ export const ProjectText = styled.div`
   letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
-  max-width: 860px;
+  width: 860px;
   opacity: 0;
   display: flex;
   flex-direction: column;
@@ -165,15 +165,17 @@ export const OverlayWrapper = styled.div`
 
 export const ProjectImagesContainer = styled(ProjectTextContainer)`
   z-index: 2;
+  display: block;
 `
 
 export const ImageContainer = styled.div`
   position: absolute;
   display: block;
   z-index: 2;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  // left: 50%;
+  // top: 50%;
+  // transform: translate(-50%, -50%);
+  // transform: translateX(-50%) translateY(-50%);
   max-height: 680px;
   max-width: 512px;
   border-radius: 10px;
