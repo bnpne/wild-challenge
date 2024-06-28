@@ -80,6 +80,7 @@ export type Project = {
   _createdAt: string
   _updatedAt: string
   _rev: string
+  dataIndex?: number
   title?: string
   image?: {
     asset?: {

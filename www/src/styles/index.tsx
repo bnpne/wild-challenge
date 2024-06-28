@@ -14,6 +14,8 @@ export const MainDiv = styled.div`
   @media (min-width: 2400px) {
     font-size: 1vw;
   }
+
+  cursor: none;
 `
 
 export const PageDiv = styled.div`
@@ -58,9 +60,11 @@ export const BackgroundImageWrapper = styled.div`
   flex-direction: column;
   z-index: 1;
   // min-width: 0;
+  pointer-events: none;
 `
 
 export const ProjectTextContainer = styled.div`
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,6 +80,7 @@ export const ProjectTextContainer = styled.div`
 `
 
 export const ProjectText = styled.div`
+  pointer-events: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -154,6 +159,7 @@ export const BackgroundImageOverlay = styled(BackgroundImageDiv)`
   z-index: 2;
   display: block;
   backdrop-filter: blur(150px);
+  pointer-events: none;
 `
 
 export const OverlayWrapper = styled.div`
@@ -168,6 +174,7 @@ export const OverlayWrapper = styled.div`
 `
 
 export const ProjectImagesContainer = styled(ProjectTextContainer)`
+  pointer-events: auto;
   z-index: 2;
   display: block;
 `
@@ -176,10 +183,6 @@ export const ImageContainer = styled.div`
   position: absolute;
   display: block;
   z-index: 2;
-  // left: 50%;
-  // top: 50%;
-  // transform: translate(-50%, -50%);
-  // transform: translateX(-50%) translateY(-50%);
   max-height: 680px;
   max-width: 512px;
   aspect-ratio: 512 / 680;
@@ -193,9 +196,16 @@ export const DefaultImage = styled.img`
   height: 100%;
   vertical-align: top;
   object-fit: cover;
+  scale: 1;
+  transition: scale 200ms ease-out;
+
+  &:hover {
+    scale: 1.1;
+  }
 `
 
 export const ProjectDetailContainer = styled.div`
+  pointer-events: all;
   width: 100%;
   height: 100%;
   max-width: 109px;
@@ -224,6 +234,7 @@ export const ProjectDetailButton = styled.a`
 `
 
 export const CursorSVG = styled.div`
+  pointer-events: none;
   position: fixed;
   height: 100%;
   width: 100%;

@@ -35,24 +35,21 @@ export default function App() {
   gsap.config({
     nullTargetWarn: false,
   })
-  // ScrollTrigger.normalizeScroll(true)
 
   // Set projects
   useEffect(() => {
     getData().then(d => {
       setData(d)
-      console.log(d)
       let temp: Array<Project> = []
       let tempAnima: Array<Project> = []
       d?.projects?.forEach((project: Project, i: number) => {
+        project.dataIndex = i
         temp[i] = project
         tempAnima[i] = project
       })
 
-      // to handle a `pseudo-infinite` we need to put a duplicate of the first element on the end
       let first = temp[0]
       let second = temp[temp.length - 1]
-      // tempAnima.push(first)
       tempAnima.push(second)
       tempAnima.push(first)
 

@@ -2,6 +2,8 @@ import {MutableRefObject, useRef, useEffect, useState} from 'react'
 import {Project} from '../sanity.types'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
+import {useLenis} from 'lenis/react'
+import Lenis from 'lenis'
 
 // Styles
 import {DefaultImage, ImageContainer, ProjectImagesContainer} from '../styles'
@@ -20,10 +22,10 @@ export default function ImagesContainer({
 }) {
   // state
   const [imageArray, setImageArray] = useState<HTMLDivElement[] | []>([])
-  // const [projectImages, setProjectImages] = useState<Project[] | []>([])
 
   // refs
   const container: MutableRefObject<HTMLDivElement | undefined> = useRef()
+  const lenis: Lenis | undefined = useLenis()
 
   // on load set images
   useEffect(() => {
@@ -33,6 +35,12 @@ export default function ImagesContainer({
 
     if (im) setImageArray(im)
   }, [projects])
+
+  const handleClick = (index: number) => {
+    console.log('go to', index)
+    let pos = window.innerHeight * index
+    lenis?.scrollTo(pos)
+  }
 
   useGSAP(
     () => {
@@ -123,7 +131,11 @@ export default function ImagesContainer({
   return (
     <ProjectImagesContainer ref={container as any}>
       {projects.map((project: Project, i: number) => (
-        <ImageContainer key={i} className="project-image">
+        <ImageContainer
+          key={i}
+          className="project-image"
+          onClick={() => handleClick(project.dataIndex ? project.dataIndex : 0)}
+        >
           <DefaultImage
             src={urlFor(project?.image as any)
               .width(2000)
