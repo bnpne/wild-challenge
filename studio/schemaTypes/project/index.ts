@@ -18,6 +18,15 @@ export default defineType({
       validation: r => r.required(),
     }),
     defineField({
+      name: 'date',
+      title: 'Project Date',
+      type: 'date',
+      options: {
+        dateFormat: 'MMM YYYY',
+      },
+      validation: r => r.required(),
+    }),
+    defineField({
       name: 'client',
       title: 'Project Client',
       type: 'object',

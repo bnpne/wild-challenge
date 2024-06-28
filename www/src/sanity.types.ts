@@ -92,6 +92,7 @@ export type Project = {
     crop?: SanityImageCrop
     _type: 'image'
   }
+  date?: string
   client?: {
     clientTitle?: string
     clientLink?: string
@@ -175,7 +176,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ../www/src/config/sanity.ts
 // Variable: query
 // Query: *[_type=='main']{..., projects[]->}[0]
-export type MainQuery = {
+export type MainResult = {
   _id: string
   _type: 'main'
   _createdAt: string
@@ -200,6 +201,7 @@ export type MainQuery = {
       crop?: SanityImageCrop
       _type: 'image'
     }
+    date?: string
     client?: {
       clientTitle?: string
       clientLink?: string

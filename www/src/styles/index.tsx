@@ -88,39 +88,44 @@ export const ProjectText = styled.div`
   text-align: center;
   text-transform: uppercase;
   width: 860px;
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  // opacity: 0;
 `
+
+export const ProjectTextOuterSpan = styled.span`
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+`
+
+export const ProjectTextInnerSpan = styled(ProjectTextOuterSpan)
 
 export const ProjectTextOutline = styled.h2`
-  position: relative;
-  z-index: 1;
-  -webkit-text-stroke: 1px #ffffff;
-`
-
-export const ProjectTextMaskContainer = styled.div`
   position: absolute;
-  width: 100%;
-  height: auto;
-  z-index: 2;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  font-size: 220px;
-  font-weight: 400;
-  line-height: 176px;
-  letter-spacing: 0.04em;
-  text-align: center;
-  text-transform: uppercase;
-  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px #ffffff;
   display: flex;
   flex-direction: row;
+  width: 860px;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
 `
+
+export const ProjectTextMask = styled(ProjectTextOutline)`
+  color: #ffffff;
+  mask-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjY4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjY4MCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iYmxhY2siIC8+Cjwvc3ZnPg==');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: 512px 680px;
+`
+
 export const ProjectTextMaskText = styled.h2`
   text-align: center;
   text-transform: uppercase;
@@ -188,4 +193,43 @@ export const DefaultImage = styled.img`
   height: 100%;
   vertical-align: top;
   object-fit: cover;
+`
+
+export const ProjectDetailContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  max-width: 109px;
+  max-height: 107px;
+  position: absolute;
+  right: 155px;
+  bottom: 93px;
+  text-transform: uppercase;
+  font-family: Arial;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+`
+
+export const ProjectDetailButton = styled.a`
+  background: #ffffff;
+  padding: 9px 16px 8px 16px;
+  border-radius: 24px;
+  width: 100%;
+  color: #000;
+`
+
+export const CursorSVG = styled.div`
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  max-width: 42px;
+  max-height: 42px;
+  z-index: 10000;
 `

@@ -13,6 +13,7 @@
     "@gsap/react": "^2.1.1",
     "@sanity/client": "^6.20.1",
     "@sanity/image-url": "^1.0.2",
+    "date-fns": "^3.6.0",
     "groq": "^3.48.0",
     "gsap": "^3.12.5",
     "lenis": "^1.1.4",

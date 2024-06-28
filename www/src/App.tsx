@@ -12,16 +12,17 @@ import {HeaderDiv, MainDiv, PageDiv} from './styles'
 // Components
 import OverlayContainer from './components/OverlayContainer'
 import BackgroundImageContainer from './components/BackgroundImageContainer'
+import Cursor from './components/Cursor'
 
 // Types
-import {Project, MainQuery} from './sanity.types'
+import {Project, MainResult} from './sanity.types'
 
 /**
  * MAIN APP
  */
 export default function App() {
   // state
-  const [data, setData] = useState<MainQuery | null>(null)
+  const [data, setData] = useState<MainResult | null>(null)
   const [projects, setProjects] = useState<Array<Project> | []>([])
   const [projectsAnima, setProjectsAnima] = useState<Array<Project> | []>([])
 
@@ -40,7 +41,7 @@ export default function App() {
   useEffect(() => {
     getData().then(d => {
       setData(d)
-
+      console.log(d)
       let temp: Array<Project> = []
       let tempAnima: Array<Project> = []
       d?.projects?.forEach((project: Project, i: number) => {
@@ -50,10 +51,10 @@ export default function App() {
 
       // to handle a `pseudo-infinite` we need to put a duplicate of the first element on the end
       let first = temp[0]
-      let second = temp[1]
-      temp.push(first)
-      tempAnima.push(first)
+      let second = temp[temp.length - 1]
+      // tempAnima.push(first)
       tempAnima.push(second)
+      tempAnima.push(first)
 
       setProjects(temp)
       setProjectsAnima(tempAnima)
@@ -77,17 +78,8 @@ export default function App() {
   // wait for lenis and projects to initiate
   useEffect(() => {
     if (lenis && projects) {
-      lenis.scrollTo(0)
       lenis.stop()
-
-      // set height of container
-      // let w = Math.max(
-      //   document.documentElement.clientWidth,
-      //   window.innerWidth || 0,
-      // )
-      // let wi = w * projects.length
-      // setContainerWidth(wi)
-
+      lenis.scrollTo(0)
       lenis.start()
     }
   }, [lenis, projects])
@@ -97,14 +89,18 @@ export default function App() {
       ref={lenisRef as any}
       root
       autoRaf={false}
-      options={{lerp: 0.1, syncTouch: true, infinite: true}}
+      options={{lerp: 0.1, syncTouch: true}}
     >
       <MainDiv id="main">
         {projects.length > 0 && (
           <PageDiv className="page">
+            <Cursor />
             <HeaderDiv>{data?.title}</HeaderDiv>
             <BackgroundImageContainer projects={projects} />
-            <OverlayContainer projects={projectsAnima} />
+            <OverlayContainer
+              animaProjects={projectsAnima}
+              projects={projects}
+            />
           </PageDiv>
         )}
       </MainDiv>

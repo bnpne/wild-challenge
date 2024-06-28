@@ -1,7 +1,4 @@
-import {useEffect, useRef, useState, type MutableRefObject} from 'react'
 import {Project} from '../sanity.types'
-import gsap from 'gsap'
-import {useGSAP} from '@gsap/react'
 
 // Components
 import ImagesContainer from './ImagesContainer'
@@ -16,30 +13,15 @@ import {OverlayWrapper} from '../styles'
  */
 export default function OverlayContainer({
   projects,
+  animaProjects,
 }: {
   projects: Array<Project>
+  animaProjects: Array<Project>
 }) {
-  // state
-  const [textArray, setTextArray] = useState<HTMLElement[] | []>([])
-
-  // refs
-  const overlay: MutableRefObject<HTMLDivElement | undefined> = useRef()
-
-  // on load
-  useEffect(() => {
-    let t: HTMLElement[] = gsap.utils.toArray('.project-text')
-    setTextArray(t)
-  }, [])
-
-  // on scroll
-  useGSAP(() => {}, {
-    scope: overlay,
-  })
-
   return (
-    <OverlayWrapper ref={overlay as any}>
-      {/**<TextContainer projects={projects} />*/}
-      <ImagesContainer projects={projects} />
+    <OverlayWrapper>
+      <TextContainer projects={projects} />
+      <ImagesContainer projects={animaProjects} />
     </OverlayWrapper>
   )
 }

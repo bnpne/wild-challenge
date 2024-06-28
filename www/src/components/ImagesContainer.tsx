@@ -8,7 +8,10 @@ import {DefaultImage, ImageContainer, ProjectImagesContainer} from '../styles'
 
 // Utils
 import {urlFor} from '../utils/urlFor'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
+
+const calcViewWidth = (pixels: number, viewportWidth: number) => {
+  return (pixels * viewportWidth) / 1600
+}
 
 export default function ImagesContainer({
   projects,
@@ -37,81 +40,80 @@ export default function ImagesContainer({
         imageArray.forEach((element: HTMLElement, i: number) => {
           let pos = window.innerHeight * i
 
+          let sh = calcViewWidth(330, window.innerWidth)
+          let sw = calcViewWidth(248, window.innerWidth)
+          let lh = calcViewWidth(860, window.innerWidth)
+          let lw = calcViewWidth(512, window.innerWidth)
+
           // set z-index
-          element.style.zIndex = `${-i + 1}`
+          element.style.zIndex = `${imageArray.length - i}`
           if (i === imageArray.length - 1) {
             element.style.zIndex = `${-i}`
           }
 
           // todo, set the pixels to percentages based on width
+
           gsap.set(element, {
-            left: 16,
-            bottom: 16,
-            height: 330,
-            width: 248,
-            right: 1336,
-            top: 554,
+            top: calcViewWidth(16, window.innerWidth),
+            bottom: calcViewWidth(554, window.innerWidth),
+            left: 1336,
+            right: calcViewWidth(16, window.innerWidth),
+            height: sh,
+            width: sw,
           })
 
-          if (i === imageArray.length - 3) {
+          if (i === imageArray.length - 2) {
             gsap.set(element, {
-              height: 330,
-              width: 248,
-              right: 16,
-              left: 1336,
-              bottom: 554,
-              top: 16,
+              top: calcViewWidth(554, window.innerWidth),
+              bottom: calcViewWidth(16, window.innerWidth),
+              left: calcViewWidth(16, window.innerWidth),
+              right: calcViewWidth(1336, window.innerWidth),
+              height: sh,
+              width: sw,
+              zIndex: 0,
             })
           }
 
-          gsap.to(element, {
-            keyframes: [
-              {
-                left: 16,
-                bottom: 16,
-                height: 330,
-                width: 248,
-                right: 1336,
-                top: 554,
+          if (i < imageArray.length - 2) {
+            gsap.to(element, {
+              keyframes: [
+                {
+                  right: calcViewWidth(16, window.innerWidth),
+                  left: calcViewWidth(1336, window.innerWidth),
+                  bottom: calcViewWidth(554, window.innerWidth),
+                  top: calcViewWidth(16, window.innerWidth),
+                  width: sw,
+                  height: sh,
+                },
+                {
+                  top: calcViewWidth(110, window.innerWidth),
+                  bottom: calcViewWidth(110, window.innerWidth),
+                  left: calcViewWidth(544, window.innerWidth),
+                  right: calcViewWidth(544, window.innerWidth),
+                  width: lw,
+                  height: lh,
+                  zIndex: `${i + 1}`,
+                },
+
+                {
+                  top: calcViewWidth(554, window.innerWidth),
+                  bottom: calcViewWidth(16, window.innerWidth),
+                  left: calcViewWidth(16, window.innerWidth),
+                  right: calcViewWidth(1336, window.innerWidth),
+                  width: sw,
+                  height: sh,
+                },
+              ],
+              ease: 'none',
+              scrollTrigger: {
+                trigger: document.documentElement,
+                scrub: true,
+                start: pos - window.innerHeight,
+                end: pos + window.innerHeight / 2,
+                toggleActions: 'play revert reverse none',
               },
-              {
-                width: 512,
-                height: 860,
-                top: 110,
-                bottom: 110,
-                right: 544,
-                left: 544,
-                zIndex: `${i + 1}`,
-              },
-              {
-                height: 330,
-                width: 248,
-                right: 16,
-                left: 1336,
-                bottom: 554,
-                top: 16,
-              },
-            ],
-            ease: 'none',
-            scrollTrigger: {
-              trigger: document.documentElement,
-              scrub: true,
-              start: pos - window.innerHeight,
-              end: pos + window.innerHeight / 2,
-              toggleActions: 'restart revert reverse none',
-              onEnter: () => {},
-              onLeave: () => {
-                // gsap.set(element, {
-                //   left: 16,
-                //   bottom: 16,
-                //   height: 330,
-                //   width: 248,
-                //   right: 1336,
-                //   top: 554,
-                // })
-              },
-            },
-          })
+            })
+          }
         })
       }
     },
