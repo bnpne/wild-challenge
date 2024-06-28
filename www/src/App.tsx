@@ -23,7 +23,7 @@ export default function App() {
   // state
   const [data, setData] = useState<MainQuery | null>(null)
   const [projects, setProjects] = useState<Array<Project> | []>([])
-  const [containerWidth, setContainerWidth] = useState<number>(0)
+  const [projectsAnima, setProjectsAnima] = useState<Array<Project> | []>([])
 
   // refs
   const lenis: Lenis | undefined = useLenis()
@@ -34,6 +34,7 @@ export default function App() {
   gsap.config({
     nullTargetWarn: false,
   })
+  // ScrollTrigger.normalizeScroll(true)
 
   // Set projects
   useEffect(() => {
@@ -41,15 +42,21 @@ export default function App() {
       setData(d)
 
       let temp: Array<Project> = []
+      let tempAnima: Array<Project> = []
       d?.projects?.forEach((project: Project, i: number) => {
         temp[i] = project
+        tempAnima[i] = project
       })
 
       // to handle a `pseudo-infinite` we need to put a duplicate of the first element on the end
       let first = temp[0]
+      let second = temp[1]
       temp.push(first)
+      tempAnima.push(first)
+      tempAnima.push(second)
 
       setProjects(temp)
+      setProjectsAnima(tempAnima)
     })
   }, [])
 
@@ -74,13 +81,12 @@ export default function App() {
       lenis.stop()
 
       // set height of container
-      let w = Math.max(
-        document.documentElement.clientWidth,
-        window.innerWidth || 0,
-      )
-      let wi = w * (projects.length - 1)
-      wi += window.innerHeight
-      setContainerWidth(wi)
+      // let w = Math.max(
+      //   document.documentElement.clientWidth,
+      //   window.innerWidth || 0,
+      // )
+      // let wi = w * projects.length
+      // setContainerWidth(wi)
 
       lenis.start()
     }
@@ -93,16 +99,12 @@ export default function App() {
       autoRaf={false}
       options={{lerp: 0.1, syncTouch: true, infinite: true}}
     >
-      <MainDiv
-        style={{
-          height: containerWidth > 0 ? `${containerWidth}px` : '100vh',
-        }}
-      >
+      <MainDiv id="main">
         {projects.length > 0 && (
           <PageDiv className="page">
             <HeaderDiv>{data?.title}</HeaderDiv>
             <BackgroundImageContainer projects={projects} />
-            <OverlayContainer projects={projects} />
+            <OverlayContainer projects={projectsAnima} />
           </PageDiv>
         )}
       </MainDiv>

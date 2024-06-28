@@ -1,11 +1,11 @@
 import {useRef, type MutableRefObject} from 'react'
 import {Project} from '../sanity.types'
 import {BackgroundImageWrapper} from '../styles'
-import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 
 // Components
 import BackgroundImages from './BackgroundImages'
+import {ScrollTrigger} from 'gsap/ScrollTrigger'
 
 /**
  * BACKGROUND CONTAINER
@@ -22,19 +22,18 @@ export default function BackgroundImageContainer({
   // handle background images scroll
   useGSAP(
     () => {
-      gsap.to(background.current as HTMLDivElement, {
-        xPercent: `-${(projects.length - 1) * 100}`,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: document.documentElement,
-          scrub: true,
-          start: 'top top',
-          snap: {
-            snapTo: 1 / (projects.length - 1),
-            duration: 0.6,
-            directional: false,
-          },
-          end: 'bottom bottom',
+      // create trigger
+      ScrollTrigger.create({
+        trigger: document.documentElement,
+        start: 'top top',
+        end: 'bottom bottom',
+        // markers: true,
+        toggleActions: 'play restart none none',
+        scrub: true,
+        snap: {
+          snapTo: 1 / (projects.length - 1),
+          duration: 0.5,
+          directional: false,
         },
       })
     },
@@ -44,7 +43,13 @@ export default function BackgroundImageContainer({
   return (
     <BackgroundImageWrapper ref={background as any}>
       {projects.map((project: Project, i: number) => {
-        return <BackgroundImages key={i} project={project} />
+        return (
+          <BackgroundImages
+            className={`project-${i}`}
+            key={i}
+            project={project}
+          />
+        )
       })}
     </BackgroundImageWrapper>
   )

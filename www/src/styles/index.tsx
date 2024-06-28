@@ -54,9 +54,8 @@ export const HeaderDiv = styled.header`
 export const BackgroundImageWrapper = styled.div`
   display: flex;
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: relative;
+  flex-direction: column;
   z-index: 1;
   // min-width: 0;
 `
@@ -178,6 +177,7 @@ export const ImageContainer = styled.div`
   // transform: translateX(-50%) translateY(-50%);
   max-height: 680px;
   max-width: 512px;
+  aspect-ratio: 512 / 680;
   border-radius: 10px;
   border: 1px #000 solid;
   overflow: hidden;

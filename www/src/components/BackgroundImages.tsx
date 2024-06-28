@@ -7,9 +7,15 @@ import {
 } from '../styles'
 import {urlFor} from '../utils/urlFor'
 
-export default function BackgroundImages({project}: {project: Project}) {
+export default function BackgroundImages({
+  project,
+  className,
+}: {
+  project: Project
+  className: string
+}) {
   return (
-    <BackgroundImageDiv>
+    <BackgroundImageDiv className={className}>
       <BackgroundImage>
         <BackgroundImageOverlay />
         <DefaultImage
