@@ -45,12 +45,18 @@ export default function App() {
         temp[i] = project
       })
 
+      // to handle a `pseudo-infinite` we need to put a duplicate of the first element on the end
+      let first = temp[0]
+      temp.push(first)
+
       setProjects(temp)
     })
   }, [])
 
+  // Set lenis RAF to GSAP RAF
   useEffect(() => {
-    function update(time: any) {
+    function update(time: number) {
+      // @ts-ignore
       lenisRef.current?.lenis?.raf(time * 1000)
     }
 
@@ -67,11 +73,11 @@ export default function App() {
       lenis.scrollTo(0)
       lenis.stop()
 
+      // set height of container
       let w = Math.max(
         document.documentElement.clientWidth,
         window.innerWidth || 0,
       )
-
       let wi = w * (projects.length - 1)
       wi += window.innerHeight
       setContainerWidth(wi)
@@ -85,7 +91,7 @@ export default function App() {
       ref={lenisRef as any}
       root
       autoRaf={false}
-      options={{lerp: 0.1, syncTouch: true}}
+      options={{lerp: 0.1, syncTouch: true, infinite: true}}
     >
       <MainDiv
         style={{

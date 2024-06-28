@@ -17,89 +17,19 @@ export default function ImagesContainer({
   // state
   const [imageArray, setImageArray] = useState<HTMLDivElement[] | []>([])
 
-  // ref
+  // refs
   const container: MutableRefObject<HTMLDivElement | undefined> = useRef()
 
   // on load set images
   useEffect(() => {
     let im: HTMLElement[] | any = gsap.utils.toArray('.project-image')
     if (im) setImageArray(im)
-
-    // setImagePosition(im, scroll.currentIndex)
   }, [projects])
 
   useGSAP(
     () => {
-      // console.log(imageArray)
       if (imageArray) {
-        imageArray.forEach((element: HTMLElement, i: number) => {
-          //   gsap
-          //     .timeline({
-          //       scrollTrigger: {
-          //         trigger: document.body,
-          //         start: window.innerWidth * i - window.innerWidth,
-          //         end: window.innerWidth * i + window.innerWidth,
-          //         scrub: true,
-          //         markers: true,
-          //       },
-          //     })
-          //     .fromTo(
-          //       element,
-          //       {
-          //         y: '0%',
-          //         x: '0%',
-          //         left: 16,
-          //         bottom: 16,
-          //         height: 330,
-          //         width: 248,
-          //       },
-          //       {
-          //         width: 512,
-          //         height: 860,
-          //         bottom: 'unset',
-          //         top: '50%',
-          //         left: '50%',
-          //         y: '-50%',
-          //         x: '-50%',
-          //       },
-          //     )
-          //     .to(element, {
-          //       height: 330,
-          //       width: 248,
-          //       right: 16,
-          //       top: 16,
-          //       y: '0%',
-          //       x: '0%',
-          //       bottom: 'unset',
-          //     })
-          // gsap.fromTo(
-          //   element,
-          //   {
-          //     y: '0%',
-          //     x: '0%',
-          //     left: 16,
-          //     bottom: 16,
-          //     height: 330,
-          //     width: 248,
-          //   },
-          //   {
-          //     width: 512,
-          //     height: 860,
-          //     bottom: 'unset',
-          //     top: '50%',
-          //     left: '50%',
-          //     y: '-50%',
-          //     x: '-50%',
-          //     scrollTrigger: {
-          //       trigger: document.body,
-          //       scrub: true,
-          //       markers: true,
-          //       start: window.innerWidth * i,
-          //       end: window.innerWidth * i + window.innerWidth / 2,
-          //     },
-          //   },
-          // )
-        })
+        // imageArray.forEach((element: HTMLElement, i: number) => {})
       }
     },
     {scope: container, dependencies: [imageArray]},

@@ -29,6 +29,11 @@ export default function BackgroundImageContainer({
           trigger: document.documentElement,
           scrub: true,
           start: 'top top',
+          snap: {
+            snapTo: 1 / (projects.length - 1),
+            duration: 0.6,
+            directional: false,
+          },
           end: 'bottom bottom',
         },
       })
