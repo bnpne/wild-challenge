@@ -43,7 +43,7 @@ export const HeaderDiv = styled.header`
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 16px;
+  padding: calc((16 * 100vw) / 1600);
 
   @media (max-width: 1000px) {
     padding: 2vw;
@@ -92,7 +92,7 @@ export const ProjectText = styled.div`
   letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
-  width: 860px;
+  width: calc((860 * 100vw) / 1600);
   // opacity: 0;
 `
 
@@ -114,7 +114,7 @@ export const ProjectTextOutline = styled.h2`
   -webkit-text-stroke: 1px #ffffff;
   display: flex;
   flex-direction: row;
-  width: 860px;
+  width: calc((860 * 100vw) / 1600);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
@@ -128,7 +128,7 @@ export const ProjectTextMask = styled(ProjectTextOutline)`
   -webkit-mask-position: center;
   mask-position: center;
   -webkit-mask-size: contain;
-  mask-size: 512px 680px;
+  mask-size: calc((512 * 100vw) / 1600) calc((680 * 100vw) / 1600);
 `
 
 export const ProjectTextMaskText = styled.h2`
@@ -183,8 +183,8 @@ export const ImageContainer = styled.div`
   position: absolute;
   display: block;
   z-index: 2;
-  max-height: 680px;
-  max-width: 512px;
+  max-height: calc((680 * 100vw) / 1600);
+  max-width: calc((512 * 100vw) / 1600);
   aspect-ratio: 512 / 680;
   border-radius: 10px;
   border: 1px #000 solid;
@@ -208,11 +208,11 @@ export const ProjectDetailContainer = styled.div`
   pointer-events: all;
   width: 100%;
   height: 100%;
-  max-width: 109px;
-  max-height: 107px;
+  max-width: calc((109 * 100vw) / 1600);
+  max-height: calc((107 * 100vw) / 1600);
   position: absolute;
-  right: 155px;
-  bottom: 93px;
+  right: calc((155 * 100vw) / 1600);
+  bottom: calc((93 * 100vw) / 1600);
   text-transform: uppercase;
   font-family: Arial;
   font-size: 10px;
@@ -223,14 +223,28 @@ export const ProjectDetailContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+
+  @media (max-width: 1000px) {
+    font-size: 2vw;
+    line-height: 2.2vw;
+  }
+
+  @media (min-width: 2400px) {
+    font-size: 0.8vw;
+    line-height: 1vw;
+
+    max-width: calc((150 * 100vw) / 1600);
+    max-height: calc((150 * 100vw) / 1600);
+  }
 `
 
 export const ProjectDetailButton = styled.a`
   background: #ffffff;
-  padding: 9px 16px 8px 16px;
+  padding: calc((9 * 100vw) / 1600) calc((16 * 100vw) / 1600);
   border-radius: 24px;
   width: 100%;
   color: #000;
+  text-align: center;
 `
 
 export const CursorSVG = styled.div`
@@ -240,7 +254,7 @@ export const CursorSVG = styled.div`
   width: 100%;
   top: 0;
   left: 0;
-  max-width: 42px;
-  max-height: 42px;
+  max-width: calc((42 * 100vw) / 1600);
+  max-height: calc((42 * 100vw) / 1600);
   z-index: 10000;
 `
