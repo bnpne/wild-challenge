@@ -38,6 +38,7 @@ export const PageDiv = styled.div`
 `
 
 export const HeaderDiv = styled.header`
+  text-transform: uppercase;
   position: fixed;
   top: 0;
   left: 0;
