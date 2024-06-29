@@ -88,12 +88,13 @@ export const ProjectText = styled.div`
   transform: translate(-50%, -50%);
   font-size: 220px;
   font-weight: 400;
-  line-height: 176px;
+  line-height: 180px;
   letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
   width: calc((860 * 100vw) / 1600);
   // opacity: 0;
+  white-space: normal;
 `
 
 export const ProjectTextOuterSpan = styled.span`
@@ -105,6 +106,7 @@ export const ProjectTextOuterSpan = styled.span`
 export const ProjectTextInnerSpan = styled(ProjectTextOuterSpan)
 
 export const ProjectTextOutline = styled.h2`
+  column-gap: 30px;
   position: absolute;
   top: 50%;
   left: 50%;

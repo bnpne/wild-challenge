@@ -15,10 +15,6 @@ const calcViewWidth = (pixels: number) => {
   return (pixels * 100) / 1600
 }
 
-const calcViewHeight = (pixels: number) => {
-  return (pixels * 100) / 900
-}
-
 export default function ImagesContainer({
   projects,
 }: {
@@ -63,8 +59,8 @@ export default function ImagesContainer({
           // todo, set the pixels to percentages based on width
 
           gsap.set(element, {
-            top: `${calcViewHeight(16)}vh`,
-            bottom: `${calcViewHeight(554)}vh`,
+            top: `${calcViewWidth(16)}vw`,
+            bottom: `${calcViewWidth(554)}vw`,
             left: `${calcViewWidth(1336)}vw`,
             right: `${calcViewWidth(16)}vw`,
             height: sh,
@@ -73,8 +69,8 @@ export default function ImagesContainer({
 
           if (i === imageArray.length - 2) {
             gsap.set(element, {
-              top: `${calcViewHeight(554)}vh`,
-              bottom: `${calcViewHeight(16)}vh`,
+              top: `${calcViewWidth(554)}vw`,
+              bottom: `${calcViewWidth(16)}vw`,
               left: `${calcViewWidth(16)}vw`,
               right: `${calcViewWidth(1336)}vw`,
               height: sh,
@@ -89,14 +85,14 @@ export default function ImagesContainer({
                 {
                   right: `${calcViewWidth(16)}vw`,
                   left: `${calcViewWidth(1336)}vw`,
-                  bottom: `${calcViewHeight(554)}vh`,
-                  top: `${calcViewHeight(16)}vh`,
+                  bottom: `${calcViewWidth(554)}vw`,
+                  top: `${calcViewWidth(16)}vw`,
                   width: sw,
                   height: sh,
                 },
                 {
-                  top: `${calcViewHeight(110)}vh`,
-                  bottom: `${calcViewHeight(110)}vh`,
+                  top: `${calcViewWidth(110)}vw`,
+                  bottom: `${calcViewWidth(110)}vw`,
                   left: `${calcViewWidth(544)}vw`,
                   right: `${calcViewWidth(544)}vw`,
                   width: lw,
@@ -105,8 +101,8 @@ export default function ImagesContainer({
                 },
 
                 {
-                  top: `${calcViewHeight(554)}vh`,
-                  bottom: `${calcViewHeight(16)}vh`,
+                  top: `${calcViewWidth(554)}vw`,
+                  bottom: `${calcViewWidth(16)}vw`,
                   left: `${calcViewWidth(16)}vw`,
                   right: `${calcViewWidth(1336)}vw`,
                   width: sw,
