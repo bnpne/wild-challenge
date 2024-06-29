@@ -53,15 +53,13 @@ export default function ImagesContainer({
           // set z-index
           element.style.zIndex = `${imageArray.length - i}`
           if (i === imageArray.length - 1) {
-            element.style.zIndex = `${-i}`
+            element.style.zIndex = `${-10}`
           }
-
-          // todo, set the pixels to percentages based on width
 
           gsap.set(element, {
             top: `${calcViewWidth(16)}vw`,
-            bottom: `${calcViewWidth(554)}vw`,
-            left: `${calcViewWidth(1336)}vw`,
+            bottom: 'auto',
+            left: 'auto',
             right: `${calcViewWidth(16)}vw`,
             height: sh,
             width: sw,
@@ -69,13 +67,13 @@ export default function ImagesContainer({
 
           if (i === imageArray.length - 2) {
             gsap.set(element, {
-              top: `${calcViewWidth(554)}vw`,
+              top: 'auto',
               bottom: `${calcViewWidth(16)}vw`,
               left: `${calcViewWidth(16)}vw`,
-              right: `${calcViewWidth(1336)}vw`,
+              right: 'auto',
               height: sh,
               width: sw,
-              zIndex: 0,
+              zIndex: -10,
             })
           }
 
@@ -97,7 +95,9 @@ export default function ImagesContainer({
                   right: `${calcViewWidth(544)}vw`,
                   width: lw,
                   height: lh,
-                  zIndex: `${i + 1}`,
+                  onComplete: () => {
+                    element.style.zIndex = `${i + 1}`
+                  },
                 },
 
                 {
@@ -108,6 +108,9 @@ export default function ImagesContainer({
                   width: sw,
                   height: sh,
                   transformOrigin: 'center center',
+                  onReverseComplete: () => {
+                    element.style.zIndex = `${imageArray.length - i}`
+                  },
                 },
               ],
               ease: 'none',
@@ -116,7 +119,7 @@ export default function ImagesContainer({
                 scrub: true,
                 start: pos - window.innerHeight,
                 end: pos + window.innerHeight / 2,
-                toggleActions: 'play revert reverse none',
+                toggleActions: 'play none reverse none',
               },
             })
           }
