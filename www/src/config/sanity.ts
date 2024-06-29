@@ -1,6 +1,6 @@
 import {createClient} from '@sanity/client'
 import groq from 'groq'
-import {MainQuery} from '../sanity.types'
+import {MainResult} from '../sanity.types'
 
 export const client = createClient({
   // 1nq388dx
@@ -12,7 +12,7 @@ export const client = createClient({
 
 export async function getData() {
   const query = groq`*[_type=='main']{..., projects[]->}[0]`
-  const data: MainQuery = await client.fetch(query)
+  const data: MainResult = await client.fetch(query)
 
   return data
 }
