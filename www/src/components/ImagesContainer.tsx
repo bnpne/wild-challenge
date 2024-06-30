@@ -11,10 +11,6 @@ import {DefaultImage, ImageContainer, ProjectImagesContainer} from '../styles'
 // Utils
 import {urlFor} from '../utils/urlFor'
 
-const calcViewWidth = (pixels: number) => {
-  return (pixels * 100) / 1600
-}
-
 export default function ImagesContainer({
   projects,
 }: {
@@ -44,11 +40,13 @@ export default function ImagesContainer({
       if (imageArray) {
         imageArray.forEach((element: HTMLElement, i: number) => {
           let pos = window.innerHeight * i
+          let hpos = 0
 
-          let sh = `${calcViewWidth(330)}vw`
-          let sw = `${calcViewWidth(248)}vw`
-          let lh = `${calcViewWidth(860)}vw`
-          let lw = `${calcViewWidth(512)}vw`
+          // sizes
+          let sh = window.innerWidth * (330 / 1600)
+          let sw = window.innerWidth * (248 / 1600)
+          let lh = window.innerWidth * (860 / 1600)
+          let lw = window.innerWidth * (512 / 1600)
 
           // ratios to keep responsive
           let hr = 0.835 // for left and right
@@ -62,19 +60,24 @@ export default function ImagesContainer({
           }
 
           gsap.set(element, {
-            top: `${window.innerWidth * pr}px`,
+            top: window.innerWidth * pr,
             bottom: 'auto',
             left: 'auto',
-            right: `${window.innerWidth * pr}px`,
+            right: window.innerWidth * pr,
             height: sh,
             width: sw,
+            onComplete: () => {
+              let cs = window.getComputedStyle(element)
+              let csv = cs.bottom
+              hpos = parseFloat(csv)
+            },
           })
 
           if (i === imageArray.length - 2) {
             gsap.set(element, {
               top: 'auto',
-              bottom: `${window.innerWidth * pr}px`,
-              left: `${window.innerWidth * pr}px`,
+              bottom: window.innerWidth * pr,
+              left: window.innerWidth * pr,
               right: 'auto',
               height: sh,
               width: sw,
@@ -86,20 +89,24 @@ export default function ImagesContainer({
             gsap.to(element, {
               keyframes: [
                 {
-                  top: `${window.innerWidth * pr}px`,
-                  bottom: `${window.innerHeight * vr}px`,
-                  right: `${window.innerWidth * pr}px`,
-                  left: `${window.innerWidth * hr}px`,
+                  top: window.innerWidth * pr + sh / 2,
+                  bottom: window.innerHeight * vr + sh / 2,
+                  right: window.innerWidth * pr + sw / 2,
+                  left: window.innerWidth * hr + sw / 2,
                   width: sw,
                   height: sh,
+                  yPercent: -50,
+                  xPercent: -50,
                 },
                 {
-                  top: `${calcViewWidth(110)}vw`,
-                  bottom: `${calcViewWidth(110)}vw`,
-                  left: `${calcViewWidth(544)}vw`,
-                  right: `${calcViewWidth(544)}vw`,
+                  top: '50%',
+                  bottom: '50%',
+                  right: '50%',
+                  left: '50%',
                   width: lw,
                   height: lh,
+                  yPercent: -50,
+                  xPercent: -50,
                   onComplete: () => {
                     element.style.zIndex = `${i + 1}`
                   },
@@ -108,10 +115,12 @@ export default function ImagesContainer({
                 {
                   width: sw,
                   height: sh,
-                  top: 'unset',
-                  bottom: `${window.innerWidth * pr}px`,
-                  left: `${window.innerWidth * pr}px`,
-                  right: `${window.innerWidth * hr}px`,
+                  top: hpos + sh / 2,
+                  bottom: window.innerWidth * pr + sh / 2,
+                  left: window.innerWidth * pr + sw / 2,
+                  right: window.innerWidth * hr + sw / 2,
+                  yPercent: -50,
+                  xPercent: -50,
                   onReverseComplete: () => {
                     element.style.zIndex = `${imageArray.length - i}`
                   },
@@ -120,6 +129,7 @@ export default function ImagesContainer({
               ease: 'none',
               scrollTrigger: {
                 trigger: document.documentElement,
+                invalidateOnRefresh: true,
                 scrub: true,
                 start: pos - window.innerHeight,
                 end: pos + window.innerHeight / 2,

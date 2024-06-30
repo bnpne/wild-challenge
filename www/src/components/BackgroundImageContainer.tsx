@@ -30,6 +30,7 @@ export default function BackgroundImageContainer({
         // markers: true,
         toggleActions: 'play restart none none',
         scrub: true,
+        invalidateOnRefresh: true,
         snap: {
           snapTo: 1 / (projects.length - 1),
           duration: 0.5,

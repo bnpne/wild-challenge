@@ -46,6 +46,8 @@ export const HeaderDiv = styled.header`
   z-index: 1000;
   padding: calc((16 * 100vw) / 1600);
 
+  letter-spacing: 0.08em;
+
   @media (max-width: 1000px) {
     padding: 2vw;
   }
@@ -96,6 +98,11 @@ export const ProjectText = styled.div`
   width: calc((860 * 100vw) / 1600);
   // opacity: 0;
   white-space: normal;
+
+  @media (min-height: 2000px) {
+    font-size: 15vw;
+    line-height: 12vw;
+  }
 `
 
 export const ProjectTextOuterSpan = styled.span`
@@ -236,8 +243,8 @@ export const ProjectDetailContainer = styled.div`
     font-size: 0.8vw;
     line-height: 1vw;
 
-    max-width: calc((150 * 100vw) / 1600);
-    max-height: calc((150 * 100vw) / 1600);
+    max-width: calc((130 * 100vw) / 1600);
+    max-height: calc((130 * 100vw) / 1600);
   }
 `
 
@@ -248,6 +255,10 @@ export const ProjectDetailButton = styled.a`
   width: 100%;
   color: #000;
   text-align: center;
+
+  @media (min-width: 2400px) {
+    border-radius: 2vw;
+  }
 `
 
 export const CursorSVG = styled.div`
