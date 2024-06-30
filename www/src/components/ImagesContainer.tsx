@@ -50,6 +50,11 @@ export default function ImagesContainer({
           let lh = `${calcViewWidth(860)}vw`
           let lw = `${calcViewWidth(512)}vw`
 
+          // ratios to keep responsive
+          let hr = 0.835 // for left and right
+          let vr = 0.61555555555556 // for top and bottom
+          let pr = 0.01 // for padding
+
           // set z-index
           element.style.zIndex = `${imageArray.length - i}`
           if (i === imageArray.length - 1) {
@@ -57,10 +62,10 @@ export default function ImagesContainer({
           }
 
           gsap.set(element, {
-            top: `${calcViewWidth(16)}vw`,
+            top: `${window.innerWidth * pr}px`,
             bottom: 'auto',
             left: 'auto',
-            right: `${calcViewWidth(16)}vw`,
+            right: `${window.innerWidth * pr}px`,
             height: sh,
             width: sw,
           })
@@ -68,8 +73,8 @@ export default function ImagesContainer({
           if (i === imageArray.length - 2) {
             gsap.set(element, {
               top: 'auto',
-              bottom: `${calcViewWidth(16)}vw`,
-              left: `${calcViewWidth(16)}vw`,
+              bottom: `${window.innerWidth * pr}px`,
+              left: `${window.innerWidth * pr}px`,
               right: 'auto',
               height: sh,
               width: sw,
@@ -81,10 +86,10 @@ export default function ImagesContainer({
             gsap.to(element, {
               keyframes: [
                 {
-                  right: `${calcViewWidth(16)}vw`,
-                  left: `${calcViewWidth(1336)}vw`,
-                  bottom: `${calcViewWidth(554)}vw`,
-                  top: `${calcViewWidth(16)}vw`,
+                  top: `${window.innerWidth * pr}px`,
+                  bottom: `${window.innerHeight * vr}px`,
+                  right: `${window.innerWidth * pr}px`,
+                  left: `${window.innerWidth * hr}px`,
                   width: sw,
                   height: sh,
                 },
@@ -101,13 +106,12 @@ export default function ImagesContainer({
                 },
 
                 {
-                  top: `${calcViewWidth(554)}vw`,
-                  bottom: `${calcViewWidth(16)}vw`,
-                  left: `${calcViewWidth(16)}vw`,
-                  right: `${calcViewWidth(1336)}vw`,
                   width: sw,
                   height: sh,
-                  transformOrigin: 'center center',
+                  top: 'unset',
+                  bottom: `${window.innerWidth * pr}px`,
+                  left: `${window.innerWidth * pr}px`,
+                  right: `${window.innerWidth * hr}px`,
                   onReverseComplete: () => {
                     element.style.zIndex = `${imageArray.length - i}`
                   },
