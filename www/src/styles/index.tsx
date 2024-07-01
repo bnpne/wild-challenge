@@ -227,8 +227,8 @@ export const ProjectDetailContainer = styled.div`
   pointer-events: all;
   width: 100%;
   height: 100%;
-  max-width: calc((119 * 100vw) / 1600);
-  max-height: calc((117 * 100vw) / 1600);
+  max-width: calc((109 * 100vw) / 1600);
+  max-height: calc((107 * 100vw) / 1600);
   position: absolute;
   right: calc((155 * 100vw) / 1600);
   bottom: calc((93 * 100vw) / 1600);
