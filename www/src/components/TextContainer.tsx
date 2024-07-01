@@ -143,11 +143,8 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
         ))}
       {projects &&
         projects.map((project: Project, i: number) => {
-          {
-            /**@ts-ignore*/
-          }
+          /**@ts-ignore*/
           let parsed = parse(project.data, 'yyyy-MM-dd', new Date())
-          // let formatted = format(parsed, 'MMM yyyy')
           return (
             <ProjectDetailContainer className="project-info" key={i}>
               <p>Johanna Hobel for {project.client?.clientTitle}</p>
