@@ -8,7 +8,7 @@ export const MainDiv = styled.div`
   overscroll-behavior: none;
 
   @media (max-width: 1000px) {
-    font-size: 2vw;
+    font-size: 3vw;
   }
 
   @media (min-width: 2400px) {
@@ -99,6 +99,11 @@ export const ProjectText = styled.div`
   // opacity: 0;
   white-space: normal;
 
+  @media (max-width: 1000px) {
+    font-size: 15vw;
+    line-height: 13vw;
+  }
+
   @media (min-height: 2000px) {
     font-size: 15vw;
     line-height: 12vw;
@@ -128,6 +133,10 @@ export const ProjectTextOutline = styled.h2`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 1000px) {
+    column-gap: 3vw;
+  }
 `
 
 export const ProjectTextMask = styled(ProjectTextOutline)`
@@ -218,8 +227,8 @@ export const ProjectDetailContainer = styled.div`
   pointer-events: all;
   width: 100%;
   height: 100%;
-  max-width: calc((109 * 100vw) / 1600);
-  max-height: calc((107 * 100vw) / 1600);
+  max-width: calc((119 * 100vw) / 1600);
+  max-height: calc((117 * 100vw) / 1600);
   position: absolute;
   right: calc((155 * 100vw) / 1600);
   bottom: calc((93 * 100vw) / 1600);
@@ -237,6 +246,11 @@ export const ProjectDetailContainer = styled.div`
   @media (max-width: 1000px) {
     font-size: 2vw;
     line-height: 2.2vw;
+
+    max-width: 20vw;
+    max-height: 20vw;
+    right: 10vw;
+    bottom: 10vw;
   }
 
   @media (min-width: 2400px) {
@@ -255,6 +269,10 @@ export const ProjectDetailButton = styled.a`
   width: 100%;
   color: #000;
   text-align: center;
+
+  @media (max-width: 1000px) {
+    padding: 2vw 2vw;
+  }
 
   @media (min-width: 2400px) {
     border-radius: 2vw;

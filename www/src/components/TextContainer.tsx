@@ -2,7 +2,7 @@ import {Project} from '../sanity.types'
 import {useState, useEffect, useRef, MutableRefObject} from 'react'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
-import {format} from 'date-fns'
+import {format, parse} from 'date-fns'
 
 // Styes
 import {
@@ -142,19 +142,25 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
           </ProjectText>
         ))}
       {projects &&
-        projects.map((project: Project, i: number) => (
-          <ProjectDetailContainer className="project-info" key={i}>
-            <p>Johanna Hobel for {project.client?.clientTitle}</p>
-            {/**@ts-ignore*/}
-            <p>{format(new Date(project.data + 1), 'MMM yyyy')}</p>
-            <ProjectDetailButton
-              target="_blank"
-              href={project.client?.clientLink}
-            >
-              Have a Look
-            </ProjectDetailButton>
-          </ProjectDetailContainer>
-        ))}
+        projects.map((project: Project, i: number) => {
+          {
+            /**@ts-ignore*/
+          }
+          let parsed = parse(project.data, 'yyyy-MM-dd', new Date())
+          // let formatted = format(parsed, 'MMM yyyy')
+          return (
+            <ProjectDetailContainer className="project-info" key={i}>
+              <p>Johanna Hobel for {project.client?.clientTitle}</p>
+              <p>{format(parsed, 'MMM yyyy')}</p>
+              <ProjectDetailButton
+                target="_blank"
+                href={project.client?.clientLink}
+              >
+                Have a Look
+              </ProjectDetailButton>
+            </ProjectDetailContainer>
+          )
+        })}
     </ProjectTextContainer>
   )
 }
