@@ -177,6 +177,7 @@ export const BackgroundImageOverlay = styled(BackgroundImageDiv)`
   position: absolute;
   z-index: 2;
   display: block;
+  -webkit-backdrop-filter: blur(150px);
   backdrop-filter: blur(150px);
   pointer-events: none;
 `
