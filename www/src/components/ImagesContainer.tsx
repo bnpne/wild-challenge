@@ -1,15 +1,23 @@
-import {MutableRefObject, useRef, useEffect, useState} from 'react'
+import {MutableRefObject, useRef} from 'react'
 import {Project} from '../sanity.types'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
-import {useLenis} from 'lenis/react'
 import Lenis from 'lenis'
 
 // Styles
-import {DefaultImage, ImageContainer, ProjectImagesContainer} from '../styles'
+import {
+  CenterContainer,
+  DefaultImage,
+  LeftContainer,
+  RightContainer,
+  MainImageContainer,
+  ProjectImagesContainer,
+  LittleImageContainer,
+} from '../styles'
 
 // Utils
 import {urlFor} from '../utils/urlFor'
+import {useLenis} from 'lenis/react'
 
 export default function ImagesContainer({
   projects,
@@ -17,148 +25,126 @@ export default function ImagesContainer({
   projects: Array<Project>
 }) {
   // state
-  const [imageArray, setImageArray] = useState<HTMLDivElement[] | []>([])
 
   // refs
   const container: MutableRefObject<HTMLDivElement | undefined> = useRef()
   const lenis: Lenis | undefined = useLenis()
 
-  // on load set images
-  useEffect(() => {
-    let im: HTMLElement[] | any = gsap.utils.toArray('.project-image')
-
-    if (im) setImageArray(im)
-  }, [projects])
-
-  const handleClick = (index: number) => {
-    let pos = window.innerHeight * index
-    lenis?.scrollTo(pos)
-  }
-
+  // Handle Animation
   useGSAP(
     () => {
-      if (imageArray) {
-        imageArray.forEach((element: HTMLElement, i: number) => {
-          let pos = window.innerHeight * i
-          let hpos = 0
+      let mainImages: HTMLElement[] | undefined = gsap.utils.toArray(
+        '.main-project-image',
+        container.current,
+      )
+      let leftImages: HTMLElement[] | undefined = gsap.utils.toArray(
+        '.left-project-image',
+        container.current,
+      )
+      let rightImages: HTMLElement[] | undefined = gsap.utils.toArray(
+        '.right-project-image',
+        container.current,
+      )
 
-          // sizes
-          let sh = window.innerWidth * (330 / 1600)
-          let sw = window.innerWidth * (248 / 1600)
-          let lh = window.innerWidth * (860 / 1600)
-          let lw = window.innerWidth * (512 / 1600)
+      if (mainImages.length > 0) {
+        // Set current index
+        mainImages.forEach((main: HTMLElement, i: number) => {
+          let rightIndex = i === mainImages.length - 1 ? 0 : i + 1
+          let leftIndex = i === 0 ? mainImages.length - 1 : i - 1
 
-          // ratios to keep responsive
-          let hr = 0.835 // for left and right
-          let vr = 0.61555555555556 // for top and bottom
-          let pr = 0.01 // for padding
-
-          // set z-index
-          element.style.zIndex = `${imageArray.length - i}`
-          if (i === imageArray.length - 1) {
-            element.style.zIndex = `${-10}`
-          }
-
-          gsap.set(element, {
-            top: window.innerWidth * pr,
-            bottom: 'auto',
-            left: 'auto',
-            right: window.innerWidth * pr,
-            height: sh,
-            width: sw,
-            onComplete: () => {
-              let cs = window.getComputedStyle(element)
-              let csv = cs.bottom
-              hpos = parseFloat(csv)
+          gsap.to([main, leftImages[leftIndex], rightImages[rightIndex]], {
+            keyframes: {opacity: [0, 1, 0], yPercent: [80, 0, -80]},
+            scrollTrigger: {
+              onLeave: () => {
+                main.style.pointerEvents = 'none'
+                leftImages[leftIndex].style.pointerEvents = 'none'
+                rightImages[rightIndex].style.pointerEvents = 'none'
+              },
+              onLeaveBack: () => {
+                main.style.pointerEvents = 'none'
+                leftImages[leftIndex].style.pointerEvents = 'none'
+                rightImages[rightIndex].style.pointerEvents = 'none'
+              },
+              onEnter: () => {
+                main.style.pointerEvents = 'none'
+                leftImages[leftIndex].style.pointerEvents = 'auto'
+                rightImages[rightIndex].style.pointerEvents = 'auto'
+              },
+              onEnterBack: () => {
+                main.style.pointerEvents = 'none'
+                leftImages[leftIndex].style.pointerEvents = 'auto'
+                rightImages[rightIndex].style.pointerEvents = 'auto'
+              },
+              invalidateOnRefresh: true,
+              trigger: document.documentElement,
+              start: window.innerHeight * i - window.innerHeight / 4,
+              end: window.innerHeight * i + window.innerHeight / 4,
+              scrub: true,
+              // preventOverlaps: true,
+              fastScrollEnd: true,
             },
           })
-
-          if (i === imageArray.length - 2) {
-            gsap.set(element, {
-              top: 'auto',
-              bottom: window.innerWidth * pr,
-              left: window.innerWidth * pr,
-              right: 'auto',
-              height: sh,
-              width: sw,
-              zIndex: -10,
-            })
-          }
-
-          if (i < imageArray.length - 2) {
-            gsap.to(element, {
-              keyframes: [
-                {
-                  top: window.innerWidth * pr + sh / 2,
-                  bottom: window.innerHeight * vr + sh / 2,
-                  right: window.innerWidth * pr + sw / 2,
-                  left: window.innerWidth * hr + sw / 2,
-                  width: sw,
-                  height: sh,
-                  yPercent: -50,
-                  xPercent: -50,
-                },
-                {
-                  top: '50%',
-                  bottom: '50%',
-                  right: '50%',
-                  left: '50%',
-                  width: lw,
-                  height: lh,
-                  yPercent: -50,
-                  xPercent: -50,
-                  onComplete: () => {
-                    element.style.zIndex = `${i + 1}`
-                  },
-                },
-
-                {
-                  width: sw,
-                  height: sh,
-                  top: hpos + sh / 2,
-                  bottom: window.innerWidth * pr + sh / 2,
-                  left: window.innerWidth * pr + sw / 2,
-                  right: window.innerWidth * hr + sw / 2,
-                  yPercent: -50,
-                  xPercent: -50,
-                  onReverseComplete: () => {
-                    element.style.zIndex = `${imageArray.length - i}`
-                  },
-                },
-              ],
-              ease: 'none',
-              scrollTrigger: {
-                trigger: document.documentElement,
-                invalidateOnRefresh: true,
-                scrub: true,
-                start: pos - window.innerHeight,
-                end: pos + window.innerHeight / 2,
-                toggleActions: 'play none reverse none',
-              },
-            })
-          }
         })
       }
     },
-    {scope: container, dependencies: [imageArray]},
+    {scope: container, dependencies: [container.current]},
   )
+
+  const handleClick = (index: number) => {
+    let scroll: number = window.innerHeight * index
+    lenis!.scrollTo(scroll, {lerp: 0.1, duration: 1})
+  }
 
   return (
     <ProjectImagesContainer ref={container as any}>
-      {projects.map((project: Project, i: number) => (
-        <ImageContainer
-          key={i}
-          className="project-image"
-          onClick={() => handleClick(project.dataIndex ? project.dataIndex : 0)}
-        >
-          <DefaultImage
-            src={urlFor(project?.image as any)
-              .width(2000)
-              .auto('format')
-              .url()}
-          />
-        </ImageContainer>
-      ))}
+      <LeftContainer>
+        {projects.map((project: Project, i: number) => (
+          <LittleImageContainer
+            onClick={() => handleClick(i)}
+            className="left-project-image"
+            key={i}
+          >
+            <DefaultImage
+              src={urlFor(project?.image as any)
+                .width(2000)
+                .auto('format')
+                .url()}
+            />
+          </LittleImageContainer>
+        ))}
+      </LeftContainer>
+      <CenterContainer>
+        {projects.map((project: Project, i: number) => (
+          <MainImageContainer
+            onClick={() => handleClick(i)}
+            className="main-project-image"
+            key={i}
+          >
+            <DefaultImage
+              src={urlFor(project?.image as any)
+                .width(2000)
+                .auto('format')
+                .url()}
+            />
+          </MainImageContainer>
+        ))}
+      </CenterContainer>
+      <RightContainer>
+        {projects.map((project: Project, i: number) => (
+          <LittleImageContainer
+            onClick={() => handleClick(i)}
+            className="right-project-image"
+            key={i}
+          >
+            <DefaultImage
+              src={urlFor(project?.image as any)
+                .width(2000)
+                .auto('format')
+                .url()}
+            />
+          </LittleImageContainer>
+        ))}
+      </RightContainer>
     </ProjectImagesContainer>
   )
 }

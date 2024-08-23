@@ -1,10 +1,15 @@
 import {useRef, type MutableRefObject} from 'react'
 import {Project} from '../sanity.types'
-import {BackgroundImageWrapper} from '../styles'
+import {
+  BackgroundImageWrapper,
+  BackgroundImage,
+  BackgroundImageOverlay,
+  DefaultImage,
+} from '../styles'
 import {useGSAP} from '@gsap/react'
+import {urlFor} from '../utils/urlFor'
 
 // Components
-import BackgroundImages from './BackgroundImages'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
 
 /**
@@ -28,12 +33,13 @@ export default function BackgroundImageContainer({
         start: 'top top',
         end: 'bottom bottom',
         // markers: true,
-        toggleActions: 'play restart none none',
-        scrub: true,
+        toggleActions: 'play none none none',
+        // scrub: true,
         invalidateOnRefresh: true,
         snap: {
+          ease: 'easeOutQuint',
           snapTo: 1 / (projects.length - 1),
-          duration: 0.5,
+          duration: 1,
           directional: false,
         },
       })
@@ -43,13 +49,17 @@ export default function BackgroundImageContainer({
 
   return (
     <BackgroundImageWrapper ref={background as any}>
+      <BackgroundImageOverlay />
       {projects.map((project: Project, i: number) => {
         return (
-          <BackgroundImages
-            className={`project-${i}`}
-            key={i}
-            project={project}
-          />
+          <BackgroundImage style={{zIndex: `${projects.length - i}`}} key={i}>
+            <DefaultImage
+              src={urlFor(project?.image as any)
+                .width(2000)
+                .auto('format')
+                .url()}
+            />
+          </BackgroundImage>
         )
       })}
     </BackgroundImageWrapper>

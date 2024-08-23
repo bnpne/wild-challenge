@@ -13,15 +13,13 @@ import {OverlayWrapper} from '../styles'
  */
 export default function OverlayContainer({
   projects,
-  animaProjects,
 }: {
   projects: Array<Project>
-  animaProjects: Array<Project>
 }) {
   return (
     <OverlayWrapper>
       <TextContainer projects={projects} />
-      <ImagesContainer projects={animaProjects} />
+      <ImagesContainer projects={projects} />
     </OverlayWrapper>
   )
 }

@@ -13,6 +13,10 @@ import {
   ProjectTextMask,
   ProjectTextOuterSpan,
   ProjectTextOutline,
+  SliderBulletOutline,
+  SliderBullet,
+  SliderBullets,
+  SliderPosition,
 } from '../styles'
 
 export default function TextContainer({projects}: {projects: Array<Project>}) {
@@ -20,9 +24,12 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
   const [splitArray, setSplitArray] = useState<Array<string[]> | []>([])
   const [loading, setLoading] = useState<boolean>(true)
   let t: HTMLElement[] | undefined
+  const [index, setIndex] = useState<number>(1)
 
   // refs
   const overlay: MutableRefObject<HTMLDivElement | undefined> = useRef()
+  const sliderBullet: MutableRefObject<HTMLDivElement | undefined> = useRef()
+  const slider: MutableRefObject<HTMLDivElement | undefined> = useRef()
 
   useEffect(() => {
     if (loading === true) {
@@ -47,6 +54,43 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
   useGSAP(
     () => {
       if (loading === false) {
+        // get width of slider
+        let sliderWidth = slider.current!.getBoundingClientRect().width
+
+        // width of the bullets, which is the same as the bullet outlinens
+        let bulletWidth =
+          sliderBullet.current!.getBoundingClientRect().width / 2
+
+        // subtract the width as we need the center of the bullet first outline to the center of the last bullet outline
+        sliderWidth -= bulletWidth * 2
+
+        // get the interval for the slider
+        let sliderInterval = sliderWidth / (projects.length - 1)
+
+        // Scroll Position
+        gsap.to(
+          {},
+          {
+            scrollTrigger: {
+              trigger: document.documentElement,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: true,
+              invalidateOnRefresh: true,
+              onUpdate: self => {
+                let progress = self.progress * (projects.length - 1)
+                let progressFloor = Math.floor(progress)
+
+                setIndex(progressFloor + 1)
+
+                console.log(progress * sliderInterval)
+                sliderBullet.current!.style.transform = `translateX(${progress * sliderInterval}px)`
+              },
+            },
+          },
+        )
+
+        // Text Animation
         t = gsap.utils.toArray('.project-text')
         let info: HTMLDivElement[] | [] = gsap.utils.toArray('.project-info')
         t.forEach((element: HTMLElement, i: number) => {
@@ -56,7 +100,7 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
             element,
           )
 
-          gsap.set(inner, {yPercent: 100, opacity: 0})
+          gsap.set(inner, {yPercent: -200, opacity: 0})
           gsap.set(info[i], {opacity: 0})
 
           let tl = gsap.timeline({
@@ -69,13 +113,12 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
               toggleActions: 'play revert reverse none',
             },
           })
-
           tl.to(
             inner,
             {
               keyframes: [
                 {
-                  yPercent: 100,
+                  yPercent: 200,
                   opacity: 0,
                 },
                 {
@@ -83,7 +126,7 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
                   opacity: 1,
                 },
                 {
-                  yPercent: -100,
+                  yPercent: -200,
                   opacity: 0,
                 },
               ],
@@ -95,7 +138,7 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
             {
               keyframes: [
                 {
-                  yPercent: 100,
+                  yPercent: 200,
                   opacity: 0,
                 },
                 {
@@ -103,7 +146,7 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
                   opacity: 1,
                 },
                 {
-                  yPercent: -100,
+                  yPercent: -200,
                   opacity: 0,
                 },
               ],
@@ -113,7 +156,7 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
         })
       }
     },
-    {scope: overlay, dependencies: [loading]},
+    {scope: overlay, dependencies: [loading, sliderBullet.current]},
   )
 
   return (
@@ -141,6 +184,17 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
             </ProjectTextMask>
           </ProjectText>
         ))}
+
+      <SliderPosition>
+        <div>{index} OF 5</div>
+        <SliderBullets ref={slider as any}>
+          <SliderBullet ref={sliderBullet as any} />
+          {projects.map((_, i: number) => {
+            return <SliderBulletOutline key={i} />
+          })}
+        </SliderBullets>
+      </SliderPosition>
+
       {projects &&
         projects.map((project: Project, i: number) => {
           /**@ts-ignore*/

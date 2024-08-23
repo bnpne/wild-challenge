@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+/////////////////////
+// MAIN CONTAINERS //
+/////////////////////
+
 export const MainDiv = styled.div`
   position: relative;
   font-size: 16px;
@@ -11,7 +15,7 @@ export const MainDiv = styled.div`
     font-size: 3vw;
   }
 
-  @media (min-width: 2400px) {
+  @media (min-width: 3000px) {
     font-size: 1vw;
   }
 
@@ -32,7 +36,7 @@ export const PageDiv = styled.div`
   //   padding: 2vw;
   // }
   //
-  // @media (min-width: 2400px) {
+  // @media (min-width: 3000px) {
   //   padding: 1vw;
   // }
 `
@@ -52,9 +56,23 @@ export const HeaderDiv = styled.header`
     padding: 2vw;
   }
 
-  @media (min-width: 2400px) {
-    padding: 1vw;
+  @media (min-width: 3000px) {
+    padding: 1.5vw 1vw;
   }
+`
+
+//////////////////////
+// BACKGROUND IMAGE //
+//////////////////////
+
+export const BackgroundImageDiv = styled.div`
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 export const BackgroundImageWrapper = styled.div`
   display: flex;
@@ -62,9 +80,164 @@ export const BackgroundImageWrapper = styled.div`
   position: relative;
   flex-direction: column;
   z-index: 1;
-  // min-width: 0;
   pointer-events: none;
 `
+
+export const BackgroundImage = styled.div`
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: block;
+  height: 100vh;
+  min-width: 100%;
+  width: 100%;
+`
+
+export const BackgroundImageOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  display: block;
+  -webkit-backdrop-filter: blur(150px);
+  backdrop-filter: blur(150px);
+  pointer-events: none;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  backface-visibility: hidden;
+`
+
+export const OverlayWrapper = styled.div`
+  position: fixed;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`
+
+////////////////////
+// PROJECT IMAGES //
+////////////////////
+
+export const ProjectImagesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+
+  pointer-events: auto;
+  z-index: 2;
+
+  padding: calc((16 * 100vw) / 1600);
+
+  @media (max-width: 1000px) {
+    padding: 2vw;
+  }
+
+  @media (min-width: 3000px) {
+    padding: 1vw;
+  }
+`
+
+export const CenterContainer = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: calc((512 * 100vw) / 1600);
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 430px) {
+    width: 300px;
+    max-width: calc((512 * 100vw) / 430);
+  }
+`
+
+export const LeftContainer = styled(CenterContainer)`
+  max-width: calc((248 * 100vw) / 1600);
+  justify-content: flex-end;
+  align-items: flex-end;
+  @media (min-width: 2000px) {
+    max-width: calc((248 * 100vw) / 2560);
+  }
+`
+
+export const RightContainer = styled(CenterContainer)`
+  max-width: calc((248 * 100vw) / 1600);
+  justify-content: flex-start;
+  align-items: flex-start;
+  @media (min-width: 2000px) {
+    max-width: calc((248 * 100vw) / 2560);
+  }
+`
+
+export const MainImageContainer = styled.div`
+  position: absolute;
+  display: block;
+  z-index: 2;
+  max-height: calc((680 * 100vw) / 1600);
+  max-width: calc((512 * 100vw) / 1600);
+  aspect-ratio: 512 / 680;
+  border-radius: 10px;
+  border: 1px #000 solid;
+  overflow: hidden;
+  pointer-events: none;
+
+  @media (max-width: 430px) {
+    width: 300px;
+    max-height: calc((680 * 100vw) / 430);
+    max-width: calc((512 * 100vw) / 430);
+  }
+
+  @media (min-width: 2800px) {
+    border-radius: 40px;
+    border: 3px #000 solid;
+  }
+`
+
+export const LittleImageContainer = styled(MainImageContainer)`
+  max-height: calc((330 * 100vw) / 1600);
+  max-width: calc((248 * 100vw) / 1600);
+
+  @media (min-width: 2000px) {
+    max-height: calc((330 * 100vw) / 2560);
+    max-width: calc((248 * 100vw) / 2560);
+  }
+`
+
+export const DefaultImage = styled.img`
+  width: 100%;
+  height: 100%;
+  vertical-align: top;
+  object-fit: cover;
+  scale: 1;
+  transition: scale 200ms ease-out;
+
+  &:hover {
+    scale: 1.1;
+  }
+`
+
+/////////////////////////////
+// PROJECT TEXT CONTAINERS //
+/////////////////////////////
 
 export const ProjectTextContainer = styled.div`
   pointer-events: none;
@@ -95,21 +268,24 @@ export const ProjectText = styled.div`
   letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
-  width: calc((860 * 100vw) / 1600);
-  // opacity: 0;
+  width: auto;
   white-space: normal;
 
   @media (max-width: 1000px) {
-    font-size: 15vw;
-    line-height: 13vw;
+    font-size: 20vw;
+    line-height: 20vw;
   }
 
-  @media (min-height: 2000px) {
+  @media (min-width: 2000px) {
+    font-size: 13vw;
+    line-height: 11vw;
+  }
+
+  @media (min-width: 3000px) {
     font-size: 15vw;
     line-height: 12vw;
   }
 `
-
 export const ProjectTextOuterSpan = styled.span`
   display: inline-block;
   vertical-align: top;
@@ -129,13 +305,25 @@ export const ProjectTextOutline = styled.h2`
   -webkit-text-stroke: 1px #ffffff;
   display: flex;
   flex-direction: row;
-  width: calc((860 * 100vw) / 1600);
+  // width: calc((900 * 100vw) / 1600);
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  width: 900px;
 
-  @media (max-width: 1000px) {
-    column-gap: 3vw;
+  @media (max-width: 430px) {
+    width: 400px;
+    column-gap: 2vw;
+  }
+
+  @media (min-width: 2000px) {
+    width: calc((1000 * 100vw) / 1600);
+    -webkit-text-stroke: 1px #ffffff;
+  }
+
+  @media (min-width: 3000px) {
+    width: calc((1000 * 100vw) / 1600);
+    -webkit-text-stroke: 3px #ffffff;
   }
 `
 
@@ -148,80 +336,15 @@ export const ProjectTextMask = styled(ProjectTextOutline)`
   mask-position: center;
   -webkit-mask-size: contain;
   mask-size: calc((512 * 100vw) / 1600) calc((680 * 100vw) / 1600);
+
+  @media (max-width: 430px) {
+    mask-size: 300px calc((680 * 100vw) / 430);
+  }
 `
 
 export const ProjectTextMaskText = styled.h2`
   text-align: center;
   text-transform: uppercase;
-`
-
-export const BackgroundImageDiv = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  min-width: 100%;
-`
-
-export const BackgroundImage = styled(BackgroundImageDiv)`
-  position: absolute;
-  z-index: 1;
-  display: block;
-`
-
-export const BackgroundImageOverlay = styled(BackgroundImageDiv)`
-  position: absolute;
-  z-index: 2;
-  display: block;
-  -webkit-backdrop-filter: blur(150px);
-  backdrop-filter: blur(150px);
-  pointer-events: none;
-`
-
-export const OverlayWrapper = styled.div`
-  position: fixed;
-  z-index: 2;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`
-
-export const ProjectImagesContainer = styled(ProjectTextContainer)`
-  pointer-events: auto;
-  z-index: 2;
-  display: block;
-`
-
-export const ImageContainer = styled.div`
-  position: absolute;
-  display: block;
-  z-index: 2;
-  max-height: calc((680 * 100vw) / 1600);
-  max-width: calc((512 * 100vw) / 1600);
-  aspect-ratio: 512 / 680;
-  border-radius: 10px;
-  border: 1px #000 solid;
-  overflow: hidden;
-`
-
-export const DefaultImage = styled.img`
-  width: 100%;
-  height: 100%;
-  vertical-align: top;
-  object-fit: cover;
-  scale: 1;
-  transition: scale 200ms ease-out;
-
-  &:hover {
-    scale: 1.1;
-  }
 `
 
 export const ProjectDetailContainer = styled.div`
@@ -246,7 +369,7 @@ export const ProjectDetailContainer = styled.div`
 
   @media (max-width: 1000px) {
     font-size: 2vw;
-    line-height: 2.2vw;
+    line-height: 2.4vw;
 
     max-width: 20vw;
     max-height: 20vw;
@@ -254,9 +377,17 @@ export const ProjectDetailContainer = styled.div`
     bottom: 10vw;
   }
 
-  @media (min-width: 2400px) {
-    font-size: 0.8vw;
-    line-height: 1vw;
+  @media (min-width: 2000px) {
+    font-size: 0.55vw;
+    line-height: 0.65vw;
+    max-width: calc((130 * 100vw) / 2000);
+    max-height: calc((130 * 100vw) / 2000);
+  }
+
+  @media (min-width: 3000px) {
+    letter-spacing: 0.08em;
+    font-size: 0.7vw;
+    line-height: 0.8vw;
 
     max-width: calc((130 * 100vw) / 1600);
     max-height: calc((130 * 100vw) / 1600);
@@ -275,10 +406,99 @@ export const ProjectDetailButton = styled.a`
     padding: 2vw 2vw;
   }
 
-  @media (min-width: 2400px) {
+  @media (max-width: 1440px) {
+    padding: 0.5vw 0.2vw;
+  }
+
+  @media (min-width: 3000px) {
     border-radius: 2vw;
   }
 `
+
+export const SliderPosition = styled.div`
+  position: relative;
+  font-family: Arial;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  color: white;
+  top: 21%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  @media (max-width: 430px) {
+    top: 18%;
+  }
+
+  @media (min-width: 2000px) {
+    top: 25%;
+  }
+
+  @media (min-width: 3000px) {
+    top: 25%;
+    letter-spacing: 0.08em;
+    font-size: 0.7vw;
+    line-height: 0.8vw;
+    gap: 1.5vw;
+  }
+`
+
+export const SliderBullets = styled.ul`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: auto;
+  width: auto;
+
+  @media (min-width: 3000px) {
+    gap: 0.7vw;
+    height: 0.65vw;
+  }
+`
+
+export const SliderBullet = styled.div`
+  position: absolute;
+  height: 10px;
+  width: 6px;
+  max-width: 6px;
+  background: white;
+  border: white 1px solid;
+  border-radius: 3px;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+
+  @media (min-width: 3000px) {
+    height: 100%;
+    width: 0.4vw;
+    max-width: none;
+    border: white 3px solid;
+    border-radius: 0.3vw;
+  }
+`
+
+export const SliderBulletOutline = styled.li`
+  height: 10px;
+  width: 6px;
+  max-width: 6px;
+  border: white 1px solid;
+  border-radius: 3px;
+  overflow: hidden;
+
+  @media (min-width: 3000px) {
+    height: 100%;
+    width: 0.4vw;
+    max-width: none;
+    border: white 3px solid;
+    border-radius: 0.3vw;
+  }
+`
+
+////////////
+// CURSOR //
+////////////
 
 export const CursorSVG = styled.div`
   pointer-events: none;

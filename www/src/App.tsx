@@ -1,21 +1,21 @@
 import {useEffect, useRef, useState} from 'react'
 import {getData} from './config/sanity'
-import {ReactLenis, useLenis} from 'lenis/react'
-import Lenis from 'lenis'
+import {ReactLenis} from 'lenis/react'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
+import {CustomEase} from 'gsap/all'
 
 // Styles
 import {HeaderDiv, MainDiv, PageDiv} from './styles'
 
 // Components
-import OverlayContainer from './components/OverlayContainer'
 import BackgroundImageContainer from './components/BackgroundImageContainer'
 import Cursor from './components/Cursor'
 
 // Types
 import {Project, MainResult} from './sanity.types'
+import OverlayContainer from './components/OverlayContainer'
 
 /**
  * MAIN APP
@@ -24,37 +24,28 @@ export default function App() {
   // state
   const [data, setData] = useState<MainResult | null>(null)
   const [projects, setProjects] = useState<Array<Project> | []>([])
-  const [projectsAnima, setProjectsAnima] = useState<Array<Project> | []>([])
 
   // refs
-  const lenis: Lenis | undefined = useLenis()
   const lenisRef = useRef()
 
   // register plugins
-  gsap.registerPlugin(useGSAP, ScrollTrigger)
+  gsap.registerPlugin(useGSAP, ScrollTrigger, CustomEase)
   gsap.config({
     nullTargetWarn: false,
   })
+  CustomEase.create('easeOutQuint', '0.22, 1, 0.36, 1')
 
   // Set projects
   useEffect(() => {
     getData().then(d => {
       setData(d)
       let temp: Array<Project> = []
-      let tempAnima: Array<Project> = []
       d?.projects?.forEach((project: Project, i: number) => {
         project.dataIndex = i
         temp[i] = project
-        tempAnima[i] = project
       })
 
-      let first = temp[0]
-      let second = temp[temp.length - 1]
-      tempAnima.push(second)
-      tempAnima.push(first)
-
       setProjects(temp)
-      setProjectsAnima(tempAnima)
     })
   }, [])
 
@@ -72,15 +63,6 @@ export default function App() {
     }
   })
 
-  // wait for lenis and projects to initiate
-  useEffect(() => {
-    if (lenis && projects) {
-      lenis.stop()
-      lenis.scrollTo(0)
-      lenis.start()
-    }
-  }, [lenis, projects])
-
   return (
     <ReactLenis
       ref={lenisRef as any}
@@ -94,10 +76,7 @@ export default function App() {
             <Cursor />
             <HeaderDiv>{data?.title}</HeaderDiv>
             <BackgroundImageContainer projects={projects} />
-            <OverlayContainer
-              animaProjects={projectsAnima}
-              projects={projects}
-            />
+            <OverlayContainer projects={projects} />
           </PageDiv>
         )}
       </MainDiv>
