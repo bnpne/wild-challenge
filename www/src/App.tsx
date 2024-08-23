@@ -68,7 +68,7 @@ export default function App() {
       ref={lenisRef as any}
       root
       autoRaf={false}
-      options={{lerp: 0.1}}
+      options={{lerp: 0.1, syncTouch: true}}
     >
       <MainDiv id="main">
         {projects.length > 0 && (
