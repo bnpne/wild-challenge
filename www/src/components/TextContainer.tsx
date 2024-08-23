@@ -3,6 +3,7 @@ import {useState, useEffect, useRef, MutableRefObject} from 'react'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import {format, parse} from 'date-fns'
+import {isMobile} from 'react-device-detect'
 
 // Styes
 import {
@@ -54,41 +55,42 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
   useGSAP(
     () => {
       if (loading === false) {
-        // get width of slider
-        let sliderWidth = slider.current!.getBoundingClientRect().width
+        if (isMobile === false) {
+          // get width of slider
+          let sliderWidth = slider.current!.getBoundingClientRect().width
 
-        // width of the bullets, which is the same as the bullet outlinens
-        let bulletWidth =
-          sliderBullet.current!.getBoundingClientRect().width / 2
+          // width of the bullets, which is the same as the bullet outlinens
+          let bulletWidth =
+            sliderBullet.current!.getBoundingClientRect().width / 2
 
-        // subtract the width as we need the center of the bullet first outline to the center of the last bullet outline
-        sliderWidth -= bulletWidth * 2
+          // subtract the width as we need the center of the bullet first outline to the center of the last bullet outline
+          sliderWidth -= bulletWidth * 2
 
-        // get the interval for the slider
-        let sliderInterval = sliderWidth / (projects.length - 1)
+          // get the interval for the slider
+          let sliderInterval = sliderWidth / (projects.length - 1)
+          // Scroll Position
+          gsap.to(
+            {},
+            {
+              scrollTrigger: {
+                trigger: document.documentElement,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+                invalidateOnRefresh: true,
+                onUpdate: self => {
+                  let progress = self.progress * (projects.length - 1)
+                  let progressFloor = Math.floor(progress)
 
-        // Scroll Position
-        gsap.to(
-          {},
-          {
-            scrollTrigger: {
-              trigger: document.documentElement,
-              start: 'top top',
-              end: 'bottom bottom',
-              scrub: true,
-              invalidateOnRefresh: true,
-              onUpdate: self => {
-                let progress = self.progress * (projects.length - 1)
-                let progressFloor = Math.floor(progress)
+                  setIndex(progressFloor + 1)
 
-                setIndex(progressFloor + 1)
-
-                console.log(progress * sliderInterval)
-                sliderBullet.current!.style.transform = `translateX(${progress * sliderInterval}px)`
+                  console.log(progress * sliderInterval)
+                  sliderBullet.current!.style.transform = `translateX(${progress * sliderInterval}px)`
+                },
               },
             },
-          },
-        )
+          )
+        }
 
         // Text Animation
         t = gsap.utils.toArray('.project-text')
@@ -156,7 +158,7 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
         })
       }
     },
-    {scope: overlay, dependencies: [loading, sliderBullet.current]},
+    {scope: overlay, dependencies: [loading, sliderBullet.current, isMobile]},
   )
 
   return (
@@ -184,15 +186,17 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
             </ProjectTextMask>
           </ProjectText>
         ))}
-      <SliderPosition>
-        <div>{index} OF 5</div>
-        <SliderBullets ref={slider as any}>
-          <SliderBullet ref={sliderBullet as any} />
-          {projects.map((_, i: number) => {
-            return <SliderBulletOutline key={i} />
-          })}
-        </SliderBullets>
-      </SliderPosition>
+      {isMobile === false && (
+        <SliderPosition>
+          <div>{index} OF 5</div>
+          <SliderBullets ref={slider as any}>
+            <SliderBullet ref={sliderBullet as any} />
+            {projects.map((_, i: number) => {
+              return <SliderBulletOutline key={i} />
+            })}
+          </SliderBullets>
+        </SliderPosition>
+      )}
 
       {projects &&
         projects.map((project: Project, i: number) => {
