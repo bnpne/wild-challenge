@@ -185,18 +185,15 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
             </ProjectTextMask>
           </ProjectText>
         ))}
-
-      {isMobile === false && (
-        <SliderPosition>
-          <div>{index} OF 5</div>
-          <SliderBullets ref={slider as any}>
-            <SliderBullet ref={sliderBullet as any} />
-            {projects.map((_, i: number) => {
-              return <SliderBulletOutline key={i} />
-            })}
-          </SliderBullets>
-        </SliderPosition>
-      )}
+      <SliderPosition>
+        <div>{index} OF 5</div>
+        <SliderBullets ref={slider as any}>
+          <SliderBullet ref={sliderBullet as any} />
+          {projects.map((_, i: number) => {
+            return <SliderBulletOutline key={i} />
+          })}
+        </SliderBullets>
+      </SliderPosition>
 
       {projects &&
         projects.map((project: Project, i: number) => {
