@@ -8,6 +8,7 @@ import {
 } from '../styles'
 import {useGSAP} from '@gsap/react'
 import {urlFor} from '../utils/urlFor'
+import {isMobile} from 'react-device-detect'
 
 // Components
 import {ScrollTrigger} from 'gsap/ScrollTrigger'
@@ -36,12 +37,15 @@ export default function BackgroundImageContainer({
         toggleActions: 'play none none none',
         // scrub: true,
         invalidateOnRefresh: true,
-        snap: {
-          ease: 'easeOutQuint',
-          snapTo: 1 / (projects.length - 1),
-          duration: 1,
-          directional: false,
-        },
+        snap:
+          isMobile === true
+            ? 0
+            : {
+                ease: 'easeOutQuint',
+                snapTo: 1 / (projects.length - 1),
+                duration: 1,
+                directional: false,
+              },
       })
     },
     {scope: background, dependencies: [background.current]},

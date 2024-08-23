@@ -510,4 +510,9 @@ export const CursorSVG = styled.div`
   max-width: calc((42 * 100vw) / 1600);
   max-height: calc((42 * 100vw) / 1600);
   z-index: 10000;
+  display: block;
+
+  @media (max-width: 430px) {
+    display: none;
+  }
 `
