@@ -3,7 +3,6 @@ import {useState, useEffect, useRef, MutableRefObject} from 'react'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import {format, parse} from 'date-fns'
-import {isMobile} from 'react-device-detect'
 
 // Styes
 import {
