@@ -3,6 +3,7 @@ import {useState, useEffect, useRef, MutableRefObject} from 'react'
 import gsap from 'gsap'
 import {useGSAP} from '@gsap/react'
 import {format, parse} from 'date-fns'
+import {isMobile} from 'react-device-detect'
 
 // Styes
 import {
@@ -185,15 +186,17 @@ export default function TextContainer({projects}: {projects: Array<Project>}) {
           </ProjectText>
         ))}
 
-      <SliderPosition>
-        <div>{index} OF 5</div>
-        <SliderBullets ref={slider as any}>
-          <SliderBullet ref={sliderBullet as any} />
-          {projects.map((_, i: number) => {
-            return <SliderBulletOutline key={i} />
-          })}
-        </SliderBullets>
-      </SliderPosition>
+      {isMobile === false && (
+        <SliderPosition>
+          <div>{index} OF 5</div>
+          <SliderBullets ref={slider as any}>
+            <SliderBullet ref={sliderBullet as any} />
+            {projects.map((_, i: number) => {
+              return <SliderBulletOutline key={i} />
+            })}
+          </SliderBullets>
+        </SliderPosition>
+      )}
 
       {projects &&
         projects.map((project: Project, i: number) => {
