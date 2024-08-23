@@ -351,8 +351,8 @@ export const ProjectDetailContainer = styled.div`
   pointer-events: all;
   width: 100%;
   height: 100%;
-  max-width: calc((109 * 100vw) / 1600);
-  max-height: calc((107 * 100vw) / 1600);
+  max-width: calc((120 * 100vw) / 1600);
+  max-height: calc((120 * 100vw) / 1600);
   position: absolute;
   right: calc((155 * 100vw) / 1600);
   bottom: calc((93 * 100vw) / 1600);
@@ -367,17 +367,17 @@ export const ProjectDetailContainer = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 
-  @media (max-width: 1000px) {
-    font-size: 2vw;
-    line-height: 2.4vw;
+  @media (max-width: 1400px) {
+    font-size: 1vw;
+    line-height: 1vw;
 
-    max-width: 20vw;
-    max-height: 20vw;
+    max-width: 10vw;
+    max-height: 10vw;
     right: 10vw;
     bottom: 10vw;
   }
 
-  @media (min-width: 2000px) {
+  @media (min-width: 1920px) {
     font-size: 0.55vw;
     line-height: 0.65vw;
     max-width: calc((130 * 100vw) / 2000);
